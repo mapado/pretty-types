@@ -1,0 +1,20 @@
+{
+    "name": "mapado/pretty-types",
+    "description": "Doctrine Type storing pretty printed JSON into database",
+    "keywords": ["Doctrine", "Json", "pretty"],
+    "require": {
+        "doctrine/dbal": "~2.6"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thomas di Luccio",
+            "email": "thomas.diluccio@mapado.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Mapado\\PrettyTypes\\": "src"
+        }
+    }
+}
