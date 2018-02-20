@@ -3,7 +3,7 @@
     "description": "Doctrine Type storing pretty printed JSON into database",
     "keywords": ["Doctrine", "Json", "pretty"],
     "require": {
-        "doctrine/dbal": "~2.5"
+        "doctrine/dbal": "~2.6"
     },
     "license": "MIT",
     "authors": [

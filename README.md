@@ -20,7 +20,6 @@ doctrine:
     dbal:
         types:
             json_pretty:  Mapado\PrettyTypes\JsonPrettyType
-            json_array_pretty:  Mapado\PrettyTypes\JsonArrayPrettyType
 ```
 
 In your entities
@@ -30,14 +29,6 @@ In your entities
  * ...
  *
  * @ORM\Column(name="column_name", type="json_pretty")
- */
-```
-
-```
-/**
- * ...
- *
- * @ORM\Column(name="column_name", type="json_array_pretty")
  */
 ```
 
