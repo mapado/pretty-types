@@ -1,5 +1,5 @@
 {
-    "name": "tdiluccio/pretty-types",
+    "name": "mapado/pretty-types",
     "description": "Doctrine Type storing pretty printed JSON into database",
     "keywords": ["Doctrine", "Json", "pretty"],
     "require": {
