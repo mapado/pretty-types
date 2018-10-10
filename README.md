@@ -5,8 +5,8 @@ Based on [`Doctrine DBAL types`](https://github.com/doctrine/dbal/tree/master/li
 Will store pretty printed JSON into database.
 
 ## Installation
-```
-$ composer require  mapado/pretty-types
+```sh
+composer require  mapado/pretty-types
 ```
 
 ## Usage
@@ -14,7 +14,7 @@ $ composer require  mapado/pretty-types
 ### Configuration
 
 In your config file
-```
+```yaml
 # Doctrine Configuration
 doctrine:
     dbal:
@@ -24,7 +24,7 @@ doctrine:
 
 In your entities
 
-```
+```php
 /**
  * ...
  *
