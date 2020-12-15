@@ -1,5 +1,11 @@
 # Mapado pretty-types
 
+- [Installation](#installation)
+- Types:
+  - [JSON pretty](#json-pretty)
+  - [UTCDateTime](#utcdatetime)
+- [License](#license)
+
 ## Installation
 
 ```sh
