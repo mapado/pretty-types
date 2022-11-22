@@ -10,6 +10,10 @@
         {
             "name": "Thomas di Luccio",
             "email": "thomas.diluccio@mapado.com"
+        },        
+        {
+            "name": "Julien Besnard",
+            "email": "jubesnard84@gmail.com"
         }
     ],
     "autoload": {
