@@ -14,7 +14,7 @@ composer require  mapado/pretty-types
 
 ## JSON pretty
 
-Based on [`Doctrine DBAL types`](https://github.com/doctrine/dbal/tree/master/lib/Doctrine/DBAL/Types).
+Based on [`Doctrine DBAL types`](https://github.com/doctrine/dbal/tree/v2.10.0/lib/Doctrine/DBAL/Types).
 
 Will store pretty printed JSON into database.
 
@@ -46,7 +46,7 @@ In your entities
 
 If you want to store datetime in UTC in your database.
 
-Copied version from [Working with DateTime Instances](https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/cookbook/working-with-datetime.html#handling-different-timezones-with-the-datetime-type).
+Copied version from [Working with DateTime Instances](https://www.doctrine-project.org/projects/doctrine-orm/en/3.2/cookbook/working-with-datetime.html#handling-different-timezones-with-the-datetime-type).
 
 All credits goes to the doctrine team !
 
