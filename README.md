@@ -60,6 +60,7 @@ doctrine:
   dbal:
     types:
       datetime: Mapado\PrettyTypes\UTCDateTimeType
+      datetime_immutable: Mapado\PrettyTypes\UTCDateTimeImmutableType
       datetimetz: Mapado\PrettyTypes\UTCDateTimeType
 ```
 
@@ -73,18 +74,19 @@ doctrine:
   dbal:
     types:
       utcdatetime: Mapado\PrettyTypes\UTCDateTimeType
+      utc_datetime_immutable: Mapado\PrettyTypes\UTCDateTimeImmutableType
 ```
 
 ### Usage
 
-In your entities
+In your entities, if you overrode the default datetime types, Doctrine will implicitly use the new types for all datetime fields:
 
 ```php
-/**
- * ...
- *
- * @ORM\Column(name="column_name", type="datetime")
- */
+#[ORM\Column]
+private \DateTime $someDate;
+
+#[ORM\Column]
+private \DateTimeImmutable $someDate;
 ```
 
 You should store the timezone next to the datetime too. Read [the doctrine documentation](https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/cookbook/working-with-datetime.html) for more informations.
@@ -92,9 +94,11 @@ You should store the timezone next to the datetime too. Read [the doctrine docum
 If you configured a custom type, use this instead:
 
 ```php
-/**
- * @ORM\Column(name="column_name", type="utcdatetime")
- */
+#[ORM\Column(type: 'utcdatetime')]
+private \DateTime $someDate;
+
+#[ORM\Column(type: 'utc_datetime_immutable')]
+private \DateTimeImmutable $someDate;
 ```
 
 ## License
