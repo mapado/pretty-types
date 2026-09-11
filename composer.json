@@ -3,7 +3,11 @@
     "description": "Doctrine Type storing pretty printed JSON into database",
     "keywords": ["Doctrine", "Json", "pretty"],
     "require": {
-        "doctrine/dbal": "^2.6 || ^3.3"
+        "php": "^8.1",
+        "doctrine/dbal": "^2.6 || ^3.3 || ^4.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^2.1"
     },
     "license": "MIT",
     "authors": [

@@ -10,9 +10,9 @@ use Doctrine\DBAL\Types\DateTimeImmutableType;
 
 class UTCDateTimeImmutableType extends DateTimeImmutableType
 {
-    private static \DateTimeZone $utc;
+    private static ?\DateTimeZone $utc = null;
 
-    public function convertToDatabaseValue($value, AbstractPlatform $platform): ?string
+    public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): ?string
     {
         if ($value instanceof \DateTimeImmutable) {
             $value = $value->setTimezone(self::getUtc());
@@ -21,20 +21,22 @@ class UTCDateTimeImmutableType extends DateTimeImmutableType
         return parent::convertToDatabaseValue($value, $platform);
     }
 
-    public function convertToPHPValue($value, AbstractPlatform $platform): ?\DateTimeImmutable
+    public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?\DateTimeImmutable
     {
         if (null === $value || $value instanceof \DateTimeImmutable) {
             return $value;
         }
 
-        $converted = \DateTimeImmutable::createFromFormat($platform->getDateTimeFormatString(), $value, self::getUtc()); // @phpstan-ignore argument.type
+        $converted = is_string($value)
+            ? \DateTimeImmutable::createFromFormat($platform->getDateTimeFormatString(), $value, self::getUtc())
+            : false;
 
-        if (!$converted) {
-            throw ConversionException::conversionFailedFormat(
-                $value,
-                $this->getName(),
+        if (false === $converted) {
+            throw new ConversionException(sprintf(
+                'Could not convert database value "%s" to Doctrine Type datetime_immutable. Expected format "%s".',
+                is_string($value) ? $value : get_debug_type($value),
                 $platform->getDateTimeFormatString(),
-            );
+            ));
         }
 
         return $converted;
