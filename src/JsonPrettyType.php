@@ -13,26 +13,29 @@ use Doctrine\DBAL\Types\JsonType;
  */
 class JsonPrettyType extends JsonType
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function convertToDatabaseValue($value, AbstractPlatform $platform)
+    public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): ?string
     {
         if (null === $value) {
             return null;
         }
-        $encoded = json_encode($value, JSON_PRETTY_PRINT);
-        if (JSON_ERROR_NONE !== json_last_error()) {
-            throw ConversionException::conversionFailedSerialization($value, 'json', json_last_error_msg());
+
+        try {
+            return json_encode($value, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR);
+        } catch (\JsonException $exception) {
+            throw new ConversionException(
+                sprintf(
+                    'Could not convert PHP type "%s" to "json". An error was triggered by the serialization: %s',
+                    get_debug_type($value),
+                    $exception->getMessage(),
+                ),
+                0,
+                $exception,
+            );
         }
-        return $encoded;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
+    public function getName(): string
     {
-        return parent::getName() . '_pretty';
+        return 'json_pretty';
     }
 }

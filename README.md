@@ -4,6 +4,7 @@
 - Types:
   - [JSON pretty](#json-pretty)
   - [UTCDateTime](#utcdatetime)
+  - [Legacy array](#legacy-array)
 - [License](#license)
 
 ## Installation
@@ -11,6 +12,8 @@
 ```sh
 composer require  mapado/pretty-types
 ```
+
+Compatible with doctrine/dbal 2.6+, 3.x and 4.x.
 
 ## JSON pretty
 
@@ -89,6 +92,8 @@ private \DateTime $someDate;
 private \DateTimeImmutable $someDate;
 ```
 
+`UTCDateTimeType` accepts both `\DateTime` and `\DateTimeImmutable` values when writing to the database.
+
 You should store the timezone next to the datetime too. Read [the doctrine documentation](https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/cookbook/working-with-datetime.html) for more informations.
 
 If you configured a custom type, use this instead:
@@ -100,6 +105,34 @@ private \DateTime $someDate;
 #[ORM\Column(type: 'utc_datetime_immutable')]
 private \DateTimeImmutable $someDate;
 ```
+
+## Legacy array
+
+doctrine/dbal 4 dropped the built-in `array` type (PHP `serialize()` stored in a text column).
+`LegacyArrayType` is a port of the DBAL 3 `ArrayType`, so an application upgrading to DBAL 4 keeps reading and writing its existing `array` columns.
+
+### Configuration
+
+In your config file
+
+```yaml
+# Doctrine Configuration
+doctrine:
+  dbal:
+    types:
+      array: Mapado\PrettyTypes\LegacyArrayType
+```
+
+### Usage
+
+In your entities
+
+```php
+#[ORM\Column(type: 'array')]
+private array $someArray;
+```
+
+Prefer the `json` type for new columns: this type only exists to keep existing data readable.
 
 ## License
 
