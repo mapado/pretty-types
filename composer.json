@@ -3,7 +3,7 @@
     "description": "Doctrine Type storing pretty printed JSON into database",
     "keywords": ["Doctrine", "Json", "pretty"],
     "require": {
-        "php": "^8.1",
+        "php": "^8.4",
         "doctrine/dbal": "^2.6 || ^3.3 || ^4.0"
     },
     "require-dev": {
