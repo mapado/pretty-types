@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.3.0
 ### Added
 
 - PHPUnit tests, runnable with `make test`
