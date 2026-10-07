@@ -134,6 +134,8 @@ private array $someArray;
 
 Prefer the `json` type for new columns: this type only exists to keep existing data readable.
 
+Objects are never unserialized (`allowed_classes: false`): an object stored in the column comes back as `__PHP_Incomplete_Class`. Only use this type for arrays of scalars.
+
 ## License
 
 This project is licensed under the [MIT license](LICENSE).

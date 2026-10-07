@@ -54,7 +54,8 @@ class LegacyArrayType extends Type
         });
 
         try {
-            return unserialize($value);
+            // the column is written by the application, but never revive objects from a database value
+            return unserialize($value, ['allowed_classes' => false]);
         } finally {
             restore_error_handler();
         }

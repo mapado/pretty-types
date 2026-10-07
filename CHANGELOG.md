@@ -1,6 +1,11 @@
 # Changelog
 
 ## Unreleased
+### Changed
+
+- `LegacyArrayType` no longer unserializes objects (`allowed_classes: false`)
+
+## 1.2.0
 ### Added
 
 - Compatibility with doctrine/dbal 4 (still compatible with 2.6+ and 3.x)
