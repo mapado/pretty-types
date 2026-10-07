@@ -109,7 +109,7 @@ private \DateTimeImmutable $someDate;
 ## Legacy array
 
 doctrine/dbal 4 dropped the built-in `array` type (PHP `serialize()` stored in a text column).
-`LegacyArrayType` is a port of the DBAL 3 `ArrayType`, so an application upgrading to DBAL 4 keeps reading and writing its existing `array` columns.
+`LegacyArrayType` is a port of the DBAL 3 `ArrayType`, so an application upgrading to DBAL 4 keeps reading and writing its existing `array` columns, with one restriction on objects (see below).
 
 ### Configuration
 
@@ -134,7 +134,9 @@ private array $someArray;
 
 Prefer the `json` type for new columns: this type only exists to keep existing data readable.
 
-Objects are never unserialized (`allowed_classes: false`): an object stored in the column comes back as `__PHP_Incomplete_Class`. Only use this type for arrays of scalars.
+Unlike the DBAL 3 `ArrayType`, it only unserializes `DateTime` and `DateTimeImmutable` objects (enum cases are restored too).
+Any other object stored in the column comes back as `__PHP_Incomplete_Class`.
+Dates are allowed because overriding `array` also covers third-party mappings, such as Gedmo Loggable's `AbstractLogEntry::$data`, which stores them in its changesets.
 
 ## License
 

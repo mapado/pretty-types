@@ -7,7 +7,8 @@
         "doctrine/dbal": "^2.6 || ^3.3 || ^4.0"
     },
     "require-dev": {
-        "phpstan/phpstan": "^2.1"
+        "phpstan/phpstan": "^2.1",
+        "phpunit/phpunit": "^12.0"
     },
     "license": "MIT",
     "authors": [
@@ -23,6 +24,11 @@
     "autoload": {
         "psr-4": {
             "Mapado\\PrettyTypes\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Mapado\\PrettyTypes\\Tests\\": "tests"
         }
     }
 }

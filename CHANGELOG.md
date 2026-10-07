@@ -1,9 +1,13 @@
 # Changelog
 
 ## Unreleased
+### Added
+
+- PHPUnit tests, runnable with `make test`
+
 ### Changed
 
-- `LegacyArrayType` no longer unserializes objects (`allowed_classes: false`)
+- `LegacyArrayType` no longer unserializes objects other than `DateTime` and `DateTimeImmutable` (enum cases are still restored): any other object comes back as `__PHP_Incomplete_Class`
 
 ## 1.2.0
 ### Added
