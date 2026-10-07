@@ -54,7 +54,9 @@ class LegacyArrayType extends Type
         });
 
         try {
-            return unserialize($value);
+            // the column is written by the application, but never revive arbitrary objects from a database value:
+            // only dates, which Gedmo Loggable stores in its changesets
+            return unserialize($value, ['allowed_classes' => [\DateTime::class, \DateTimeImmutable::class]]);
         } finally {
             restore_error_handler();
         }
