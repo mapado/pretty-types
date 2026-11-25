@@ -3,44 +3,45 @@
 namespace Mapado\PrettyTypes;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\ConversionException;
-use Doctrine\DBAL\Types\DateTimeType;
+use Doctrine\DBAL\Types\PhpDateTimeMappingType;
+use Doctrine\DBAL\Types\Type;
 
-class UTCDateTimeType extends DateTimeType
+/**
+ * Adapts UTCDateTimeImmutableType to \DateTime,
+ * as DBAL 4.6 deprecates its own mutable types.
+ */
+class UTCDateTimeType extends Type implements PhpDateTimeMappingType
 {
     private static ?\DateTimeZone $utc = null;
+
+    public function __construct(
+        private readonly UTCDateTimeImmutableType $inner = new UTCDateTimeImmutableType(),
+    ) {
+    }
+
+    public function getSQLDeclaration(array $column, AbstractPlatform $platform): string
+    {
+        return $this->inner->getSQLDeclaration($column, $platform);
+    }
 
     public function convertToDatabaseValue(mixed $value, AbstractPlatform $platform): ?string
     {
         if ($value instanceof \DateTime) {
-            $value->setTimezone(self::getUtc());
-        } elseif ($value instanceof \DateTimeImmutable) {
-            // DateTimeType only accepts mutable dates: format the immutable one here
-            return $value->setTimezone(self::getUtc())->format($platform->getDateTimeFormatString());
+            $value = \DateTimeImmutable::createFromMutable($value->setTimezone(self::getUtc()));
         }
 
-        return parent::convertToDatabaseValue($value, $platform);
+        return $this->inner->convertToDatabaseValue($value, $platform);
     }
 
     public function convertToPHPValue(mixed $value, AbstractPlatform $platform): ?\DateTime
     {
-        if (null === $value || $value instanceof \DateTime) {
+        if ($value instanceof \DateTime) {
             return $value;
         }
 
-        $converted = is_string($value)
-            ? \DateTime::createFromFormat($platform->getDateTimeFormatString(), $value, self::getUtc())
-            : false;
+        $value = $this->inner->convertToPHPValue($value, $platform);
 
-        if (false === $converted) {
-            throw new ConversionException(sprintf(
-                'Could not convert database value "%s" to Doctrine Type datetime. Expected format "%s".',
-                is_string($value) ? $value : get_debug_type($value),
-                $platform->getDateTimeFormatString(),
-            ));
-        }
-
-        return $converted;
+        return $value instanceof \DateTimeImmutable ? \DateTime::createFromImmutable($value) : $value;
     }
 
     private static function getUtc(): \DateTimeZone

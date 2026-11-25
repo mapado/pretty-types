@@ -13,7 +13,7 @@
 composer require  mapado/pretty-types
 ```
 
-Compatible with doctrine/dbal 2.6+, 3.x and 4.x.
+Compatible with doctrine/dbal 4.3+.
 
 ## JSON pretty
 
@@ -93,6 +93,7 @@ private \DateTimeImmutable $someDate;
 ```
 
 `UTCDateTimeType` accepts both `\DateTime` and `\DateTimeImmutable` values when writing to the database.
+It adapts `UTCDateTimeImmutableType` instead of extending the DBAL `DateTimeType`, deprecated since doctrine/dbal 4.6.
 
 You should store the timezone next to the datetime too. Read [the doctrine documentation](https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/cookbook/working-with-datetime.html) for more informations.
 
