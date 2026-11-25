@@ -3,14 +3,13 @@
 namespace Mapado\PrettyTypes;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
-use Doctrine\DBAL\Types\PhpDateTimeMappingType;
 use Doctrine\DBAL\Types\Type;
 
 /**
  * Adapts UTCDateTimeImmutableType to \DateTime,
  * as DBAL 4.6 deprecates its own mutable types.
  */
-class UTCDateTimeType extends Type implements PhpDateTimeMappingType
+class UTCDateTimeType extends Type
 {
     private static ?\DateTimeZone $utc = null;
 

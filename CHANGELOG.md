@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.5.0
+### Added
+
+- `MutableDateType`: a `date` type for `\DateTime` properties, which adapts `DateImmutableType` and triggers no doctrine/dbal 4.6 deprecation; it also accepts `\DateTimeImmutable` values when writing to the database
+
+### Changed
+
+- `UTCDateTimeType` no longer implements `PhpDateTimeMappingType`, internal to doctrine/dbal and reported by Symfony's `DebugClassLoader`: a `'CURRENT_TIMESTAMP'` string default now relies on doctrine/orm, which turns it into a `CurrentTimestamp` default expression; a schema built with doctrine/dbal alone gets a quoted default, so pass a `CurrentTimestamp` instance instead
+- Requires doctrine/dbal 4.4+, and conflicts with doctrine/orm < 3.6, the first version to turn a `'CURRENT_TIMESTAMP'` string default into a `CurrentTimestamp` instance
+
 ## 1.4.0
 ### Changed
 
