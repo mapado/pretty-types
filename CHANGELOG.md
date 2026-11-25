@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 1.5.0
 ### Added
 
 - `MutableDateType`: a `date` type for `\DateTime` properties, which adapts `DateImmutableType` and triggers no doctrine/dbal 4.6 deprecation; it also accepts `\DateTimeImmutable` values when writing to the database
