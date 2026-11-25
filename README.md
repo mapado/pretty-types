@@ -4,6 +4,7 @@
 - Types:
   - [JSON pretty](#json-pretty)
   - [UTCDateTime](#utcdatetime)
+  - [Mutable date](#mutable-date)
   - [Legacy array](#legacy-array)
 - [License](#license)
 
@@ -13,7 +14,7 @@
 composer require  mapado/pretty-types
 ```
 
-Compatible with doctrine/dbal 2.6+, 3.x and 4.x.
+Compatible with doctrine/dbal 4.3+.
 
 ## JSON pretty
 
@@ -93,6 +94,7 @@ private \DateTimeImmutable $someDate;
 ```
 
 `UTCDateTimeType` accepts both `\DateTime` and `\DateTimeImmutable` values when writing to the database.
+It adapts `UTCDateTimeImmutableType` instead of extending the DBAL `DateTimeType`, deprecated since doctrine/dbal 4.6.
 
 You should store the timezone next to the datetime too. Read [the doctrine documentation](https://www.doctrine-project.org/projects/doctrine-orm/en/2.7/cookbook/working-with-datetime.html) for more informations.
 
@@ -104,6 +106,33 @@ private \DateTime $someDate;
 
 #[ORM\Column(type: 'utc_datetime_immutable')]
 private \DateTimeImmutable $someDate;
+```
+
+## Mutable date
+
+doctrine/dbal 4.6 deprecates its mutable date and time types.
+`MutableDateType` keeps `\DateTime` properties on `date` columns without that deprecation:
+it adapts `DateImmutableType`, as suggested in the [DBAL upgrade notes](https://github.com/doctrine/dbal/blob/4.6.0/UPGRADE.md#deprecated-the-mutable-datetime-types).
+
+### Configuration
+
+In your config file
+
+```yaml
+# Doctrine Configuration
+doctrine:
+  dbal:
+    types:
+      date: Mapado\PrettyTypes\MutableDateType
+```
+
+### Usage
+
+In your entities
+
+```php
+#[ORM\Column(type: 'date')]
+private \DateTime $someDate;
 ```
 
 ## Legacy array

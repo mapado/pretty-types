@@ -1,5 +1,15 @@
 # Changelog
 
+## Unreleased
+### Added
+
+- `MutableDateType`: a `date` type for `\DateTime` properties, which adapts `DateImmutableType` and triggers no doctrine/dbal 4.6 deprecation
+
+### Changed
+
+- `UTCDateTimeType` no longer extends `DateTimeType`, deprecated in doctrine/dbal 4.6: it adapts `UTCDateTimeImmutableType`, so its conversion errors now name `datetime_immutable` and `UTCDateTimeImmutableType`
+- Requires doctrine/dbal 4.3+ (drops 2.x and 3.x)
+
 ## 1.3.0
 ### Added
 
